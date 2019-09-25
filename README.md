@@ -17,7 +17,7 @@ Dealing with URLs can be tedious sometimes. Especially when it comes to distingu
 - http://domain.com/articles/technology/./25-moon-landing?order=asc&read=true
 - http://domain.com/articles/technology/public/../25-moon-landing?order=asc&read=true
 
-All of these URLs are pointing to location and the list could be further extended. 
+All of these URLs are pointing to the same location and the list could be further extended. 
 The goal of this assignment is to write a URL implementation which can correctly distinguish between equal and truly different URLs.
 
 ### Canonical form of URL

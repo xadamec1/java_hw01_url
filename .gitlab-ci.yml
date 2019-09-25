@@ -1,0 +1,7 @@
+image: mvn-pb162:v1.0
+
+build:
+  script:
+    - mvn clean install -B -Dcheckstyle.fail=true
+  tags:
+    - shared-fi

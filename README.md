@@ -1,4 +1,4 @@
-Homework assignment no. 1, Calculator
+Homework assignment no. 1, URL
 ====================================
 
 **Publication date:** 8th October 

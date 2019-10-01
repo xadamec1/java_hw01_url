@@ -4,6 +4,8 @@ import cz.muni.fi.pb162.hw01.SmartUrl;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author Jakub Cechacek
  */
@@ -20,11 +22,20 @@ public class SmartUrlTest {
         assertEqualUrl(softly,"http://domain.com/articles/technology/25-moon-landing?order=asc&read=true" , expected);
         assertEqualUrl(softly,"http://domain.com:80/articles/technology/25-moon-landing?order=asc&read=true" , expected);
         assertEqualUrl(softly,"http://domain.com/articles/technology/./25-moon-landing?order=asc&read=true" , expected);
-        assertEqualUrl(softly,"http://domain.com/articles/technology/./25-moon-landing#foo?order=asc&read=true" , expected);
         assertEqualUrl(softly,"http://domain.com/articles/technology/public/../25-moon-landing?order=asc&read=true" , expected);
         softly.assertAll();
     }
 
+    @Test
+    public void shouldNotBeEqualUrls() {
+        SoftAssertions softly = new SoftAssertions();
+        SmartUrl expected = new Url("http://domain.com/articles/technology/25-moon-landing?order=asc&read=true");
+        assertNotEqualUrl(softly,"http://domain.com/articles/technology/25-moon-landing?order=asc&read=true&pg=2" , expected);
+        assertNotEqualUrl(softly, "http://domain.com/articles/technology/25-moon-landing#foo?order=asc&read=true" , expected);
+        assertNotEqualUrl(softly,"http://domain.com/articles/25-moon-landing?order=asc&read=true" , expected);
+        assertNotEqualUrl(softly,"http://domain.com:8080/articles/technology/25-moon-landing?order=asc&read=true" , expected);
+        softly.assertAll();
+    }
 
     @Test
     public void shouldStripTrailingSlash() {
@@ -67,9 +78,29 @@ public class SmartUrlTest {
         softly.assertAll();
     }
 
+    @Test
+    public void shouldHaveDefaultPort() {
+        SoftAssertions softly = new SoftAssertions();
+        assertDefaultPort(softly, "http://domain.com/articles", 80);
+        assertDefaultPort(softly, "https://domain.com/articles", 443);
+        assertDefaultPort(softly, "ftp://domain.com/files", 21);
+        assertDefaultPort(softly, "sftp://domain.com/files", 22);
+        assertDefaultPort(softly, "ssh://127.0.0.1", 22);
+    }
+
+    private void assertDefaultPort(SoftAssertions assertions, String url, int port) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getPort()).isEqualTo(port);
+    }
+
     private void assertEqualUrl(SoftAssertions assertions, String actual, SmartUrl expected) {
         SmartUrl u = new Url(actual);
         assertions.assertThat(u.isSameAs(expected)).isTrue();
+    }
+
+    private void assertNotEqualUrl(SoftAssertions assertions, String actual, SmartUrl expected) {
+        SmartUrl u = new Url(actual);
+        assertions.assertThat(u.isSameAs(expected)).isFalse();
     }
 
     private void assertQuery(SoftAssertions assertions, String url, String query) {

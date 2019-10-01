@@ -14,11 +14,19 @@ public enum Protocols {
     SSH(22);
 
 
-    public final int port;
-    public final String schema;
+    private final int port;
+    private final String schema;
 
     Protocols(int port) {
         this.schema = this.name().toLowerCase();
         this.port = port;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getSchema() {
+        return schema;
     }
 }

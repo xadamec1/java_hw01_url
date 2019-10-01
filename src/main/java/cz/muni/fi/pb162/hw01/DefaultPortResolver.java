@@ -9,6 +9,6 @@ public class DefaultPortResolver implements  PortResolver {
     @Override
     public int getPort(String schema) {
         Protocols protocol =  Protocols.valueOf(schema.toUpperCase());
-        return protocol.port;
+        return protocol.getPort();
     }
 }

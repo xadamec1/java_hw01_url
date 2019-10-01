@@ -55,7 +55,7 @@ public interface SmartUrl {
      *  <li>No trailing slashes</li>
      *  <li>Relative path segments referring to current or parent directory are resolved</li>
      *  <li>Order of query parameters is fixed</li>
-     * </u>
+     * </ul>
      *
      * @return String representation of this URL in it's canonical form or null if URL is invalid
      */

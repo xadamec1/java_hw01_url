@@ -50,7 +50,7 @@
             <property name="max" value="120"/>
         </module>
         <module name="MethodLength">
-            <property name="max" value="30"/>
+            <property name="max" value="50"/>
             <property name="countEmpty" value="false"/>
         </module>
         <module name="ParameterNumber"/>
@@ -88,11 +88,5 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-
-        <!-- Ability to manually disable certain checks inline via annotation -->
-        <module name="SuppressWarningsHolder" />
     </module>
-
-    <!-- Filter out warnings suppressed with the @SuppressWarnings annotation -->
-    <module name="SuppressWarningsFilter" />
 </module>

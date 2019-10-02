@@ -88,5 +88,11 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
+
+        <!-- Ability to manually disable certain checks inline via annotation -->
+        <module name="SuppressWarningsHolder" />
     </module>
+
+    <!-- Filter out warnings suppressed with the @SuppressWarnings annotation -->
+    <module name="SuppressWarningsFilter" />
 </module>

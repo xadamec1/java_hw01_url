@@ -40,11 +40,10 @@ The goal of this assignment is to write a URL implementation which can correctly
     - Outside the scope of this assignment
     
 ### Evaluation
-The maximum number of points for this assignment is **70**.
+The maximum number of points for this assignment is **7**.
 
-- **40 points** for passing tests (attached tests do not guarantee a 100% correctness).
-- **20 points** for correct implementation (evaluated by your class teacher).
-- **10 points** for clean and elegant implementation (code conventions, minimal code repetition).
+- **5 points** for passing tests (attached tests do not guarantee a 100% correctness).
+- **2 points** for correct and clean implementation (evaluated by your class teacher).
 
 In cases **when provided tests do not pass** with submitted solution you can be granted no more than **40 points** (this means that you can be granted **0 points** as well)!
 

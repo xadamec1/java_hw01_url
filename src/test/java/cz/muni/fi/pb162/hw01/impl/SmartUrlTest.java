@@ -100,6 +100,42 @@ public class SmartUrlTest {
     }
 
     @Test
+    public void shouldHaveFragment() {
+        SoftAssertions softly = new SoftAssertions();
+        assertFragment(softly, "http://domain.com#title", "title");
+        assertFragment(softly, "http://domain.com/#title", "title");
+        assertFragment(softly, "http://domain.com/articles#title", "title");
+        assertFragment(softly, "http://domain.com/articles#title?foo=bar", "title");
+        softly.assertAll();
+    }
+
+    @Test
+    public void shouldHaveProtocol() {
+        SoftAssertions softly = new SoftAssertions();
+        assertProtocol(softly, "http://domain.com/articles", "http");
+        assertProtocol(softly, "https://domain.com/articles", "https");
+        assertProtocol(softly, "ftp://domain.com/files", "ftp");
+        assertProtocol(softly, "sftp://domain.com/files", "sftp");
+        assertProtocol(softly, "ssh://myhost.local", "ssh");
+        softly.assertAll();
+    }
+
+    private void assertProtocol(SoftAssertions assertions, String url, String expectedProtocol) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getProtocol()).isEqualTo(expectedProtocol);
+    }
+
+    private void assertFragment(SoftAssertions assertions, String url, String expectedFragment) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getFragment()).isEqualTo(expectedFragment);
+    }
+
+    private void assertProtocol(SoftAssertions assertions, String url, String expectedProtocol) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getFragment()).isEqualTo(expectedFragment);
+    }
+
+    @Test
     public void shouldHaveDefaultPort() {
         SoftAssertions softly = new SoftAssertions();
         assertDefaultPort(softly, "http://domain.com/articles", 80);

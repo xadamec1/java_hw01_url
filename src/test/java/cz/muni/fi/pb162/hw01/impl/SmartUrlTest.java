@@ -1,6 +1,6 @@
 package cz.muni.fi.pb162.hw01.impl;
 
-import cz.muni.fi.pb162.hw01.SmartUrl;
+import cz.muni.fi.pb162.hw01.url.SmartUrl;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -50,22 +50,33 @@ public class SmartUrlTest {
     @Test
     public void shouldNotHavePath() {
         SoftAssertions softly = new SoftAssertions();
-        assertNullPath(softly, "http://domain.com");
-        assertNullPath(softly, "http://domain.com/");
-        assertNullPath(softly, "http://domain.com?");
-        assertNullPath(softly, "http://domain.com/articles/../");
-        assertNullPath(softly, "http://domain.com/articles/../..");
-        assertNullPath(softly, "http://domain.com?order=asc");
+        assertPath(softly, "http://domain.com");
+        assertPath(softly, "http://domain.com/");
+        assertPath(softly, "http://domain.com?");
+        assertPath(softly, "http://domain.com/articles/../");
+        assertPath(softly, "http://domain.com/articles/../..");
+        assertPath(softly, "http://domain.com?order=asc");
+        softly.assertAll();
+    }
+
+
+    @Test
+    public void shouldHavePath() {
+        SoftAssertions softly = new SoftAssertions();
+        assertPath(softly, "http://domain.com/articles", "articles");
+        assertPath(softly, "http://domain.com/articles/", "articles");
+        assertPath(softly, "http://domain.com/articles/.", "articles");
+        assertPath(softly,"http://domain.com/articles/technology?order=asc&read=true&pg=2" , "articles/technology");
         softly.assertAll();
     }
 
     @Test
     public void shouldNotHaveQuery() {
         SoftAssertions softly = new SoftAssertions();
-        assertNullQuery(softly, "http://domain.com");
-        assertNullQuery(softly, "http://domain.com?");
-        assertNullQuery(softly, "http://domain.com/articles/");
-        assertNullQuery(softly, "http://domain.com/articles?");
+        assertEmptyQuery(softly, "http://domain.com");
+        assertEmptyQuery(softly, "http://domain.com?");
+        assertEmptyQuery(softly, "http://domain.com/articles/");
+        assertEmptyQuery(softly, "http://domain.com/articles?");
         softly.assertAll();
     }
 
@@ -79,6 +90,18 @@ public class SmartUrlTest {
     }
 
     @Test
+    public void shouldHaveQuery() {
+        SoftAssertions softly = new SoftAssertions();
+        SmartUrl u = new Url("http://domain.com/articles?foo=bar&buz=qux&c&order=desc");
+        softly.assertThat(u.getQuery()).isNotNull();
+        softly.assertThat(u.getQuery()).isNotBlank();
+        softly.assertThat(u.getQuery()).contains("foo=bar");
+        softly.assertThat(u.getQuery()).contains("bug=qux");
+        softly.assertThat(u.getQuery()).contains("order=desc");
+        softly.assertAll();
+    }
+
+    @Test
     public void shouldHaveDefaultPort() {
         SoftAssertions softly = new SoftAssertions();
         assertDefaultPort(softly, "http://domain.com/articles", 80);
@@ -86,6 +109,7 @@ public class SmartUrlTest {
         assertDefaultPort(softly, "ftp://domain.com/files", 21);
         assertDefaultPort(softly, "sftp://domain.com/files", 22);
         assertDefaultPort(softly, "ssh://127.0.0.1", 22);
+        softly.assertAll();
     }
 
     private void assertDefaultPort(SoftAssertions assertions, String url, int port) {
@@ -108,14 +132,19 @@ public class SmartUrlTest {
         assertions.assertThat(u.getQuery()).isEqualTo(query);
     }
 
-    private void assertNullPath(SoftAssertions assertions, String url) {
+    private void assertPath(SoftAssertions assertions, String url) {
         SmartUrl u = new Url(url);
-        assertions.assertThat(u.getPath()).isNull();
+        assertions.assertThat(u.getPath()).isEmpty();
     }
 
-    private void assertNullQuery(SoftAssertions assertions, String url) {
+    private void assertPath(SoftAssertions assertions, String url, String expectedPath) {
         SmartUrl u = new Url(url);
-        assertions.assertThat(u.getQuery()).isNull();
+        assertions.assertThat(u.getPath()).isEqualTo(expectedPath);
+    }
+
+    private void assertEmptyQuery(SoftAssertions assertions, String url) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getQuery()).isEmpty();
     }
 
     private void assertNoTrailingSlash(SoftAssertions assertions, String url, String expected) {

@@ -1,4 +1,4 @@
-package cz.muni.fi.pb162.hw01;
+package cz.muni.fi.pb162.hw01.url;
 
 /**
  * @author Jakub Cechacek
@@ -8,7 +8,7 @@ package cz.muni.fi.pb162.hw01;
 public interface PortResolver {
 
     /**
-     * Resolves
+     * Resolves default port for protocol based on schema
      * @param schema protocol schema
      * @return default port number
      */

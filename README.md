@@ -20,6 +20,10 @@ Dealing with URLs can be tedious sometimes. Especially when it comes to distingu
 All of these URLs are pointing to the same location and the list could be further extended. 
 The goal of this assignment is to write a URL implementation which can correctly distinguish between equal and truly different URLs.
 
+### Few Rules
+For the purpose of this implementation, students are forbidden to use ```java.net.URL```, ```java.net.URI```, as well as any other classes or libraries which already implement the functionality defined by this assignment. 
+If you are not sure whether it's ok to use some class, **it's always better to ask**.   
+
 ### Canonical form of URL
 
 - Port is omitted if it is the default port for given protocol 

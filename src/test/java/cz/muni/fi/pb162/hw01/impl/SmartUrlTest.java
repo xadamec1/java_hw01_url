@@ -106,7 +106,7 @@ public class SmartUrlTest {
         assertDefaultPort(softly, "https://domain.com/articles", 443);
         assertDefaultPort(softly, "ftp://domain.com/files", 21);
         assertDefaultPort(softly, "sftp://domain.com/files", 22);
-        assertDefaultPort(softly, "ssh://127.0.0.1", 22);
+        assertDefaultPort(softly, "ssh://myhost.local", 22);
         softly.assertAll();
     }
 

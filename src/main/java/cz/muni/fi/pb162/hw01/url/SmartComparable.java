@@ -1,8 +1,8 @@
 package cz.muni.fi.pb162.hw01.url;
 
-import cz.muni.fi.pb162.hw01.url.SmartUrl;
-
 /**
+ * Capability to compare URL
+ *
  * @author Jakub Cechacek
  */
 public interface SmartComparable {

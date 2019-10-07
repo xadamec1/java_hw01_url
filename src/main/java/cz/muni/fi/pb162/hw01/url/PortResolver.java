@@ -1,9 +1,9 @@
 package cz.muni.fi.pb162.hw01.url;
 
 /**
- * @author Jakub Cechacek
- *
  * Implementation of this interface can be used to resolve port number
+ *
+ * @author Jakub Cechacek
  */
 public interface PortResolver {
 

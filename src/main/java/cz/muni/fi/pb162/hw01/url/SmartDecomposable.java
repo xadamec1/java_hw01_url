@@ -1,6 +1,8 @@
 package cz.muni.fi.pb162.hw01.url;
 
 /**
+ * Definition of URL components
+ *
  * @author Jakub Cechacek
  */
 public interface SmartDecomposable {

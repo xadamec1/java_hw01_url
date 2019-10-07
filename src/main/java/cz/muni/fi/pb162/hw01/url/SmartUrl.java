@@ -1,11 +1,9 @@
 package cz.muni.fi.pb162.hw01.url;
 
 /**
+ * Representation of URL
+ *
  * @author Jakub Cechacek
- *
- *
- *
- *
  */
 public interface SmartUrl extends SmartDecomposable, SmartComparable {
     /**

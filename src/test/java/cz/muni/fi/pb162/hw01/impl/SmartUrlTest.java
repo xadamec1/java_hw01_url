@@ -4,8 +4,6 @@ import cz.muni.fi.pb162.hw01.url.SmartUrl;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Jakub Cechacek
  */

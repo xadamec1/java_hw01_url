@@ -129,12 +129,7 @@ public class SmartUrlTest {
         SmartUrl u = new Url(url);
         assertions.assertThat(u.getFragment()).isEqualTo(expectedFragment);
     }
-
-    private void assertProtocol(SoftAssertions assertions, String url, String expectedProtocol) {
-        SmartUrl u = new Url(url);
-        assertions.assertThat(u.getFragment()).isEqualTo(expectedFragment);
-    }
-
+    
     @Test
     public void shouldHaveDefaultPort() {
         SoftAssertions softly = new SoftAssertions();

@@ -94,7 +94,7 @@ public class SmartUrlTest {
         softly.assertThat(u.getQuery()).isNotNull();
         softly.assertThat(u.getQuery()).isNotBlank();
         softly.assertThat(u.getQuery()).contains("foo=bar");
-        softly.assertThat(u.getQuery()).contains("bug=qux");
+        softly.assertThat(u.getQuery()).contains("buz=qux");
         softly.assertThat(u.getQuery()).contains("order=desc");
         softly.assertAll();
     }

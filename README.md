@@ -49,7 +49,7 @@ The maximum number of points for this assignment is **7**.
 - **5 points** for passing tests (attached tests do not guarantee a 100% correctness).
 - **2 points** for correct and clean implementation (evaluated by your class teacher).
 
-In cases **when provided tests do not pass** with submitted solution you can be granted no more than **40 points** (this means that you can be granted **0 points** as well)!
+In cases **when provided tests do not pass** with submitted solution you can be granted no more than **4 points** (this means that you can be granted **0 points** as well)!
 
 ### Preconditions
 To successfully implement this assignment you need to know the following

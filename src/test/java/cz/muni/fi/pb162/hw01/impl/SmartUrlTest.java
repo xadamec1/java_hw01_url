@@ -29,7 +29,7 @@ public class SmartUrlTest {
         SoftAssertions softly = new SoftAssertions();
         SmartUrl expected = new Url("http://domain.com/articles/technology/25-moon-landing?order=asc&read=true");
         assertNotEqualUrl(softly,"http://domain.com/articles/technology/25-moon-landing?order=asc&read=true&pg=2" , expected);
-        assertNotEqualUrl(softly, "http://domain.com/articles/technology/25-moon-landing#foo?order=asc&read=true" , expected);
+        assertNotEqualUrl(softly, "http://domain.com/articles/technology/25-moon-landing?order=asc&read=true#foo" , expected);
         assertNotEqualUrl(softly,"http://domain.com/articles/25-moon-landing?order=asc&read=true" , expected);
         assertNotEqualUrl(softly,"http://domain.com:8080/articles/technology/25-moon-landing?order=asc&read=true" , expected);
         softly.assertAll();
@@ -105,7 +105,7 @@ public class SmartUrlTest {
         assertFragment(softly, "http://domain.com#title", "title");
         assertFragment(softly, "http://domain.com/#title", "title");
         assertFragment(softly, "http://domain.com/articles#title", "title");
-        assertFragment(softly, "http://domain.com/articles#title?foo=bar", "title");
+        assertFragment(softly, "http://domain.com/articles?foo=bar#title", "title");
         softly.assertAll();
     }
 

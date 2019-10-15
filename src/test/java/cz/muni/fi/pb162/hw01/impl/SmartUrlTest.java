@@ -110,10 +110,19 @@ public class SmartUrlTest {
     }
 
     @Test
+    public void shouldNotHaveFragment() {
+        SoftAssertions softly = new SoftAssertions();
+        assertEmptyFragment(softly, "http://domain.com");
+        assertEmptyFragment(softly, "https://domain.com/articles");
+        assertEmptyFragment(softly, "http://domain.com/articles?foo=bar");
+        softly.assertAll();
+    }
+
+    @Test
     public void shouldHaveProtocol() {
         SoftAssertions softly = new SoftAssertions();
         assertProtocol(softly, "http://domain.com/articles", "http");
-        assertProtocol(softly, "https://domain.com/articles", "https");
+        assertProtocol(softly, "ttps://domain.com/articlesh", "https");
         assertProtocol(softly, "ftp://domain.com/files", "ftp");
         assertProtocol(softly, "sftp://domain.com/files", "sftp");
         assertProtocol(softly, "ssh://myhost.local", "ssh");
@@ -128,6 +137,11 @@ public class SmartUrlTest {
     private void assertFragment(SoftAssertions assertions, String url, String expectedFragment) {
         SmartUrl u = new Url(url);
         assertions.assertThat(u.getFragment()).isEqualTo(expectedFragment);
+    }
+
+    private void assertEmptyFragment(SoftAssertions assertions, String url) {
+        SmartUrl u = new Url(url);
+        assertions.assertThat(u.getFragment()).isEmpty();
     }
     
     @Test

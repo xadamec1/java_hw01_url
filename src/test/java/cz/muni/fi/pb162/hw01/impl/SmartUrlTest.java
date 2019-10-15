@@ -122,7 +122,7 @@ public class SmartUrlTest {
     public void shouldHaveProtocol() {
         SoftAssertions softly = new SoftAssertions();
         assertProtocol(softly, "http://domain.com/articles", "http");
-        assertProtocol(softly, "ttps://domain.com/articlesh", "https");
+        assertProtocol(softly, "https://domain.com/articlesh", "https");
         assertProtocol(softly, "ftp://domain.com/files", "ftp");
         assertProtocol(softly, "sftp://domain.com/files", "sftp");
         assertProtocol(softly, "ssh://myhost.local", "ssh");

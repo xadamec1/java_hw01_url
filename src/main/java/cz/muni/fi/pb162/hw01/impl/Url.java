@@ -1,7 +1,5 @@
 package cz.muni.fi.pb162.hw01.impl;
-
 import cz.muni.fi.pb162.hw01.url.SmartUrl;
-
 import java.util.Arrays;
 
 /**
@@ -33,6 +31,12 @@ public class Url implements SmartUrl {
         String[] splitted = web.split("//");
         String[] hostSplit = splitted[1].split("/");
         host = hostSplit[0];
+        if(host.contains(":")){
+            return host.split(":")[0];
+        }
+        if(!(host.contains("."))){
+            return null;
+        }
         return host;
     }
 
@@ -55,12 +59,13 @@ public class Url implements SmartUrl {
             case("https"):
                 return 443;
             case("ftp"):
-                    int i = 21;
-                    return i;
+                int i = 21;
+                return i;
             case("ssh"):
             case("sftp"):
                 return 22;
             default:
+                this.defaultPort = false;
                 return 0;
         }
 
@@ -83,85 +88,123 @@ public class Url implements SmartUrl {
     public String getPath() {
         int index = web.indexOf("/",8);
         if (index == -1 || index == web.length()-1){
-            return null;
+            return "";
         }
         int end = web.indexOf("?");
-        if(web.contains("/..")){
-            int backPath = web.indexOf("/..");
-            int counter = 0;
-            for(int i = 0; i<web.substring(index).length();i++){
-                if(web.substring(index).charAt(i)=='/'){
-                    counter = counter-1;
-                }
+        if( web.contains("/..")){
+
+            if(end == -1){
+                return slash(web.substring(index));
             }
-            while (backPath !=-1){
-                counter = counter+1;
-                if(backPath != web.length()-1){
-                    backPath = web.indexOf("/..",backPath+1);
-                }
-                else{
-                    break;
-                }
-            }
-            if(counter >=-3){
-                return null;
-            }
+            return slash(web.substring(index, end));
         }
         if(end ==-1){
             if(web.charAt(web.length()-1)=='/'){
-                return web.substring(index,web.length()-1);
+                String result = web.substring(index+1,web.length()-1);
+                return result.replace("/.", "");
+
             }
-            return web.substring(index);
+            return web.substring(index+1).replace("/.","");
         }
-        return web.substring(index,end);
+        if(web.charAt(end-1)=='/'){
+            return web.substring(index+1,end-1).replace("/.","");
+        }
+        return web.substring(index+1,end).replace("/.","");
     }
 
+    /***
+     * function to find Trailing slashes, used in function public String getPath()
+     * @return path if the path is correct, otherwise return ""
+     */
+    private String slash(String path){
+        int index = 0;
+        int backPath = path.indexOf("/..");
+
+        while(backPath !=-1){
+            for(int i=0;i<backPath;i++){
+                if(path.charAt(i)=='/'){
+                    index = i;
+                }
+            }
+            String inFront = path.substring(0,index);
+            String after = "";
+            if(path.length() > backPath+3) {
+                after = path.substring(backPath + 3);
+            }
+            path = inFront+after;
+            backPath = path.indexOf("/..");
+        }
+        if(path.equals("/")){
+            return "";
+        }
+        return path;
+    }
     @Override
     public String getQuery() {
 
         int begin = web.indexOf("?");
         if(begin == -1 || begin == web.length()-1){
-            return null;
+            return "";
         }
         String[] query = web.substring(begin+1).split("&");
         Arrays.sort(query);
         String result = "?";
         result = String.join("&",query);
         return result ;
-        }
+    }
 
 
     @Override
     public String getFragment() {
         if(!(web.contains("#"))){
-            return null;
+            return "";
         }
         int hashIndex = web.indexOf('#');
-        int endIndex = web.indexOf('?');
-        if (endIndex == -1){
-            return web.substring(hashIndex);
-        }
-        return web.substring(hashIndex,endIndex-1);
+
+        return web.substring(hashIndex+1);
     }
 
     @Override
     public String getAsString() {
+        if(anotherProblems()==false){
+            return null;
+        }
         String result = protocol+"://"+getHost();
-        if(this.defaultPort == false){
+        getPort();
+        if(!this.defaultPort){
             result = result+ ":"+getPort();
         }
-        if(getPath() != null){
-            result = result + getPath();
+        if(getPath() != "") {
+            if (getPath().charAt(0) == '/') {
+                result = result + getPath();
+            } else {
+                result = result + '/' + getPath();
+            }
         }
-        if(getFragment()!= null){
-            result = result+"#"+getFragment();
-        }
-        if(getQuery()!=null){
+        if(getQuery()!=""){
             result = result+"?"+getQuery();
+        }
+        if(getFragment()!= ""){
+            result = result+"#"+getFragment();
         }
         return result;
     }
 
+    /**
+     * detect bad protocol and domain
+     * @return True if protocol and domain are ok else false
+     */
+    private boolean anotherProblems(){
+        if (getPort()==0){
+            System.out.println("Protocol missing or does not exist");
+            return false;
+        }
+        if (getHost() == null){
+            System.out.println("Domain (.com....) is missing");
+            return false;
+        }
+        return true;
+    }
     @Override
     public String getAsRawString() {
         return web;
@@ -169,6 +212,9 @@ public class Url implements SmartUrl {
 
     @Override
     public boolean isSameAs(SmartUrl url) {
+        if(getAsString().equals(url.getAsString())){
+            return true;
+        }
         return false;
     }
 

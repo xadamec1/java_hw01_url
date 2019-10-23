@@ -166,7 +166,7 @@ public class Url implements SmartUrl {
 
     @Override
     public String getAsString() {
-        if(anotherProblems()==false){
+        if(!anotherProblems()){
             return null;
         }
         String result = protocol+"://"+getHost();

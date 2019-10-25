@@ -28,6 +28,9 @@ public class Url implements SmartUrl {
      * @return host int
      */
     public String getHost() {
+        if(!web.contains("//")){
+            return null;
+        }
         String[] splitted = web.split("//");
         String[] hostSplit = splitted[1].split("/");
         host = hostSplit[0];
@@ -68,7 +71,6 @@ public class Url implements SmartUrl {
                 this.defaultPort = false;
                 return 0;
         }
-
     }
 
     /***
@@ -84,6 +86,7 @@ public class Url implements SmartUrl {
         }
         return port;
     }
+
     @Override
     public String getPath() {
         int index = web.indexOf("/",8);
@@ -139,6 +142,7 @@ public class Url implements SmartUrl {
         }
         return path;
     }
+
     @Override
     public String getQuery() {
 
@@ -152,7 +156,6 @@ public class Url implements SmartUrl {
         result = String.join("&",query);
         return result ;
     }
-
 
     @Override
     public String getFragment() {
@@ -205,6 +208,7 @@ public class Url implements SmartUrl {
         }
         return true;
     }
+
     @Override
     public String getAsRawString() {
         return web;
